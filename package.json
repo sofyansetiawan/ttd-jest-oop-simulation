@@ -1,0 +1,20 @@
+{
+  "name": "dkatalis-parkinglot-test",
+  "version": "1.0.0",
+  "description": "Assigment for DKatalis Coding Test",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "npx jest"
+  },
+  "keywords": [
+    "Parking Lot",
+    "DKatalis Assignment"
+  ],
+  "author": "Sofyan Setiawan",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  }
+}

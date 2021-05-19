@@ -5,7 +5,6 @@
 # cmd = "cd #{functional_spec_dir}; bundle install; bundle exec rake spec:functional"
 # puts cmd
 # system cmd
-
-cd ..
-cd solution
+#cd ..
+#cd solution
 npm test

@@ -6,6 +6,6 @@
 # After this is run, bin/parking_lot
 # should Just Work.
 
-cd ..
-cd solution
+# cd ..
+# cd solution
 npm install
