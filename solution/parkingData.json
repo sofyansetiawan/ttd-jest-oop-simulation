@@ -1,17 +1,16 @@
 {
-  "capacity": 6,
-  "parkingSlot": [
-    {
-      "slot": 1,
-      "registrationNumber": "hhasdasdljasd"
-    }
+  "capacity": [
+    "7"
   ],
+  "parkingSlot": [],
   "availableSlot": [
+    1,
     2,
     3,
     4,
     5,
-    6
+    6,
+    7
   ],
   "status": true
 }

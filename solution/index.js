@@ -55,7 +55,8 @@ class ParkingLot {
         return `Allocated slot number: ${getSlot}`
     }
 
-    unpark(regNumber, hours){
+    unpark(...data){
+        const [regNumber, hours] = data
         const parkingData = this.readData();
         if(parkingData.status === false){
             return `Please setup/create parking lot first`;
@@ -80,9 +81,7 @@ class ParkingLot {
         if(hours <= 2){
             return 10
         }
-        else {
-            return ((hours - 2) * 10) + 10;
-        }
+        return ((hours - 2) * 10) + 10;
     }
 
     find(parkingData, regNumber){
@@ -117,28 +116,34 @@ class App {
 
     static run(){
         const inputProgram = process.argv;
-        const commandInput = inputProgram[0];
-        const argsInput = inputProgram.slice(1);
+        const commandInput = inputProgram[2];
+        const argsInput = inputProgram.slice(3);
 
         console.log(`
         ===================================
         DKATALIS PARKING LOT APPS by SOFYAN
         ===================================
         `)
-
         if(!commandInput){
             console.log("Please input the correct command")
+            return "Please input the correct command"
         }
         else{
-
+            const parkingLot = new ParkingLot("./parkingData.json");
+            if(argsInput.length == 0){
+                parkingLot[commandInput]()
+            }
+            else{
+                parkingLot[commandInput](argsInput)
+            }
         }
     }
 }
 
 App.run();
 
-const parkingLot = new ParkingLot("./parkingData.json");
-parkingLot.create(6)
-parkingLot.park("hhasdasdljasd")
+// const parkingLot = new ParkingLot("./parkingData.json");
+// parkingLot.create(6)
+// parkingLot.park("hhasdasdljasd")
 // parkingLot.unpark("hhasdasdljasd", 10)
-parkingLot.status();
+// parkingLot.status();

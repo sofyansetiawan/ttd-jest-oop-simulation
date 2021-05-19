@@ -1,0 +1,19 @@
+{
+  "name": "solution",
+  "version": "1.0.0",
+  "description": "Assigment for DKatalis Coding Test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Parking Lot",
+    "DKatalis Assignment"
+  ],
+  "author": "Sofyan Setiawan",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  }
+}
