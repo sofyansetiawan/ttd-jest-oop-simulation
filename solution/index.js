@@ -1,3 +1,4 @@
+var readline = require('readline');
 const fs = require("fs");
 
 class ParkingLot {
@@ -16,9 +17,10 @@ class ParkingLot {
         fs.writeFileSync(this.dataFile, jsonData, "utf-8");
     }
 
-    create(...data){
+    create_parking_lot(data){
         const [capacity] = data
         if(!capacity || isNaN(capacity)){
+            console.log(`Invalid input for capacity`)
             return `Invalid input for capacity`;
         }
         const parkingData = this.readData();
@@ -29,24 +31,25 @@ class ParkingLot {
         for(let i = 1; i <= capacity; i++){
             parkingData.availableSlot.push(i);
         }
-        let slotMessage = parkingData.availableSlot.reduce((prev, item) => {
-            return `${prev}\nAllocated Slot number: ${item}`;
-        }, "")
         this.writeData(parkingData)
-        return `Created parking lot with ${parkingData.availableSlot.length} slots ${slotMessage}`;
+        console.log(`Created parking lot with ${parkingData.availableSlot.length} slots`)
+        return `Created parking lot with ${parkingData.availableSlot.length} slots`;
     }
 
-    park(...data){
+    park(data){
         const [regNumber] = data;
         const parkingData = this.readData();
         if(parkingData.status === false){
+            console.log(`Please setup/create parking lot first`)
             return `Please setup/create parking lot first`;
         }
         if(!regNumber){
+            console.log(`Invalid argument, please fill registration number`)
             return `Invalid argument, please fill registration number`;
         }
         if (parkingData.parkingSlot.length == parkingData.capacity) {
-            return `Parking Lot is Full, you can't park new vehicle`;
+            console.log(`Sorry, parking lot is full`)
+            return `Sorry, parking lot is full`;
         }
         let getSlot = parkingData.availableSlot.shift();
         parkingData.parkingSlot.splice(getSlot-1, 0, {
@@ -54,16 +57,19 @@ class ParkingLot {
             registrationNumber: regNumber
         })
         this.writeData(parkingData)
+        console.log(`Allocated slot number: ${getSlot}`)
         return `Allocated slot number: ${getSlot}`
     }
 
-    unpark(...data){
+    leave(data){
         const [regNumber, hours] = data
         const parkingData = this.readData();
         if(parkingData.status === false){
+            console.log(`Please setup/create parking lot first`)
             return `Please setup/create parking lot first`;
         }
         if(!regNumber){
+            console.log(`Invalid argument, please fill registration number`)
             return `Invalid argument, please fill registration number`;
         }
         const [parkedPosition, parkedVehicle] = this.find(parkingData, regNumber)
@@ -73,9 +79,12 @@ class ParkingLot {
             let charge = this.chargeAmount(hours);
             this.writeData(parkingData)
             console.log(`Registration number ${parkedVehicle.registrationNumber} with Slot Number ${parkedVehicle.slot} is free with Charge ${charge}`)
+            return `Registration number ${parkedVehicle.registrationNumber} with Slot Number ${parkedVehicle.slot} is free with Charge ${charge}`
+
         }
         else{
-            return `Vehicle with that registration number is not found`;
+            console.log(`Registration number ${regNumber} not found`)
+            return `Registration number ${regNumber} not found`;
         }
     }
 
@@ -103,6 +112,7 @@ class ParkingLot {
     status(){
         const parkingData = this.readData();
         if(parkingData.status === false){
+            console.log(`Please setup/create parking lot first`)
             return `Please setup/create parking lot first`;
         }
         let status = `Slot No.\tRegistration No.`;
@@ -117,37 +127,41 @@ class ParkingLot {
 class App {
 
     static run(){
-        const inputProgram = process.argv;
-        const commandInput = inputProgram[2];
-        const argsInput = inputProgram.slice(3);
+        // const inputProgram = process.argv;
+        // const commandInput = inputProgram[2];
+        // const argsInput = inputProgram.slice(3);
+        const commandLine = readline.createInterface({
+            input: process.stdin,
+            output: process.stdout,
+        });
 
         console.log(`
         ===================================
         DKATALIS PARKING LOT APPS by SOFYAN
         ===================================
         `)
-        if(!commandInput){
-            console.log("Please input the correct command")
-            return "Please input the correct command"
-        }
-        else{
-            const parkingLot = new ParkingLot("./parkingData.json");
-            if(argsInput.length == 0){
-                parkingLot[commandInput]()
+        console.log(`Please insert a command:`)
+        commandLine.on("line", async (input) => {
+            const inputArr = input.split(" ");
+            const commandInput = inputArr[0];
+            const argsInput = inputArr.slice(1);
+            if(!commandInput){
+                console.log("Please input the correct command")
+                return "Please input the correct command"
             }
             else{
-                parkingLot[commandInput](argsInput)
+                const parkingLot = new ParkingLot("./parkingData.json");
+                if(argsInput.length == 0){
+                    parkingLot[commandInput]()
+                }
+                else{
+                    parkingLot[commandInput](argsInput)
+                }
             }
-        }
+        })
     }
 }
 
-// App.run();
-
-const parkingLot = new ParkingLot("./parkingData.json");
-parkingLot.create([6])
-// parkingLot.park("hhasdasdljasd")
-// parkingLot.unpark("hhasdasdljasd", 10)
-// parkingLot.status();
+App.run();
 
 module.exports = { App, ParkingLot }

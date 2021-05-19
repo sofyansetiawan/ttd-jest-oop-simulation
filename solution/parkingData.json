@@ -1,6 +1,31 @@
 {
-  "capacity": 0,
-  "parkingSlot": [],
+  "capacity": 6,
+  "parkingSlot": [
+    {
+      "slot": 1,
+      "registrationNumber": "KA-09-HH-0987"
+    },
+    {
+      "slot": 2,
+      "registrationNumber": "KA-01-HH-9999"
+    },
+    {
+      "slot": 3,
+      "registrationNumber": "CA-09-IO-1111"
+    },
+    {
+      "slot": 4,
+      "registrationNumber": "KA-01-HH-7777"
+    },
+    {
+      "slot": 5,
+      "registrationNumber": "KA-01-HH-2701"
+    },
+    {
+      "slot": 6,
+      "registrationNumber": "KA-01-P-333"
+    }
+  ],
   "availableSlot": [],
-  "status": false
+  "status": true
 }
