@@ -16,7 +16,8 @@ class ParkingLot {
         fs.writeFileSync(this.dataFile, jsonData, "utf-8");
     }
 
-    create(capacity){
+    create(...data){
+        const [capacity] = data
         if(!capacity || isNaN(capacity)){
             return `Invalid input for capacity`;
         }
@@ -35,7 +36,8 @@ class ParkingLot {
         return `Created parking lot with ${parkingData.availableSlot.length} slots ${slotMessage}`;
     }
 
-    park(regNumber){
+    park(...data){
+        const [regNumber] = data;
         const parkingData = this.readData();
         if(parkingData.status === false){
             return `Please setup/create parking lot first`;
@@ -140,10 +142,12 @@ class App {
     }
 }
 
-App.run();
+// App.run();
 
-// const parkingLot = new ParkingLot("./parkingData.json");
-// parkingLot.create(6)
+const parkingLot = new ParkingLot("./parkingData.json");
+parkingLot.create([6])
 // parkingLot.park("hhasdasdljasd")
 // parkingLot.unpark("hhasdasdljasd", 10)
 // parkingLot.status();
+
+module.exports = { App, ParkingLot }
