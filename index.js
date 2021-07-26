@@ -127,9 +127,6 @@ class ParkingLot {
 class App {
 
     static run(){
-        // const inputProgram = process.argv;
-        // const commandInput = inputProgram[2];
-        // const argsInput = inputProgram.slice(3);
         const commandLine = readline.createInterface({
             input: process.stdin,
             output: process.stdout,
@@ -137,7 +134,7 @@ class App {
 
         console.log(`
         ===================================
-        DKATALIS PARKING LOT APPS by SOFYAN
+        PARKING APPS by SOFYAN
         ===================================
         `)
         console.log(`Please insert a command:`)
